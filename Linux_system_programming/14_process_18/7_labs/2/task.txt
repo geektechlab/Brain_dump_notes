@@ -1,0 +1,56 @@
+A mini-shell
+=============
+
+Believe it or not, you now have all the pieces necessary to implement a very basic shell. Think about it: A shell is just a fork-exec-wait loop. 
+
+It prompts the user for input, then forks, tries to execute the input as a command, and then waits for that command to finish. 
+
+ The challenging part is constructing the argv array needed for exec based on the input
+
+String Tokenizer and Constructing an argv[]
+==============================================
+
+To construct an argv array from an arbitrary string, we need to first split the string up based on a separator, such as whitespace. In C, this process is called string tokenization. The string library has a function strtok() to perform the tokenization, but it can be a little cumbersome.
+
+Here is some sample code to start with:
+
+// retrieve first token from line, seperated using " "
+tok = strtok(line, " ");
+
+i = 0;
+printf("%d: %s\n", i, tok);
+
+//continue to retrieve tokens until NULL returned
+while (tok = strtok(NULL, " ")) {
+    ++i;
+    printf("%d: %s\n", i, tok);
+}
+
+Upon the first call to strtok(), you provide the string to be tokenized and the separator. In this case, that’s the variable line and the separator is " ". This will return the first token in line. To continue to tokenize the same line, subsequent calls to strtok() take NULL for the string but still take the separator as the argument. You can keep retrieving tokens in this way until no more are available, and then NULL is returned, ending the while loop.
+
+For this task, you will write a mini-shell, mini-sh, that will continually prompt the user for a command, execute that command, time the length of execution, and including that length in the next prompt. It is very much just the timer program in a loop, but now you have to build an argv. Here is some sample execution:
+
+$ ./mini-sh
+mini-sh (0.0000) #> ls
+Makefile  mini-sh  mini-sh.c
+mini-sh (0.0001) #> ls -a -l
+total 32
+drwxr-x--- 2 m999999 mids  4096 Feb 24 16:32 .
+drwxr-x--- 5 m999999 mids  4096 Feb 24 16:31 ..
+-rw-r----- 1 m999999 mids   111 Feb 24 16:32 Makefile
+-rwxr-x--- 1 m999999 mids 15539 Feb 24 16:32 mini-sh
+-rw-r----- 1 m999999 mids  2970 Feb 17 11:04 mini-sh.c
+mini-sh (0.0004) #> head -c 10M /dev/zero
+mini-sh (0.0807) #> bad command
+bad: No such file or directory
+mini-sh (0.0000) #>
+
+To get started, open the mini-sh.c program. You’ll find that the looping and prompting has been provided for you. Your task is to complete the following parts:
+
+Tokenize line to construct an argv, stored in cmd_argv. Note that cmd_argv is declared with 256 slots. So you can only support commands with at most 256 arguments.
+
+Fork-exec-wait result and record the time execution in diff. You should use execvp to execute in the child, and you should wait() in the parent before continuing the loop.
+
+Exit Note: Always call _exit() after an exec in the child. The exec may fail, for example, because the command doesn’t exist. In that case, it’s very important to for the child to exit immediately (otherwise, you will have 2 shells, one for the parent and one for the child).
+
+

@@ -1,0 +1,14 @@
+File I/O
+=======================
+
+In Linux everything is a file, even directory is a file 
+
+Most file I/O on a UNIX system can be performed with six system calls: 
+	open, 
+	read, 
+	write, 
+	lseek, 
+	close,
+	dup, dup2
+
+while using these function calls, we can figure out which header file to include by man command.

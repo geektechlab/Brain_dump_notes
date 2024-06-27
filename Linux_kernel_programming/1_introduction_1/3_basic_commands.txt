@@ -1,0 +1,12 @@
+Basic Commands
+==================
+
+1. List Modules: (lsmod) lsmod gets its information by reading the file /proc/modules.
+
+2. Module Information: (modinfo) : prints the information of the module.
+
+3. Insert module: (insmod) : inserts? the module into kernel. check if loaded using lsmod and dmesg
+	sudo insmod ./hello.ko
+
+4. Remove module: (rmmod) : removes? the module into kernel. check if using lsmod and dmesg
+	sudo rmmod hello

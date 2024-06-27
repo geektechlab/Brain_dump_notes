@@ -1,0 +1,78 @@
+Your task is to complete the timer program starting with the source file timer.c. 
+
+The timer program will take another program as command line arguments, it will then fork and execute that program, record the amount of time it takes to execute, and then print the result afterwards.
+
+You should use the gettimeofday() system call to retrieve the current time since programs often execute at the milisecond level.
+
+To make the subtraction of struct timeval’s more sensible, there is a provided function (from the gnu website) which, given two time vals, will take the difference and store the result in result.
+
+You should use the following print format to output the resulting timestamp:
+
+printf("Run Time: %ld.%04ld (s)\n", diff.tv_sec, diff.tv_usec/1000);
+
+
+Here is a sample run of the timer program. Actual runtimes will vary based on your computer performance. Using sleep as a baseline is a good test.
+
+$ ./timer
+Run Time: 0.0084 (s)
+
+$ ./timer ls
+Makefile  timer  timer.c
+Run Time: 0.0002 (s)
+
+$ ./timer ls -l
+total 20
+-rw-r----- 1 m999999 scs    89 Feb 17 11:04 Makefile
+-rwxr-x--- 1 m999999 scs 10898 Feb 24 17:08 timer
+-rw-r----- 1 m999999 scs  1595 Feb 24 17:08 timer.c
+Run Time: 0.0003 (s)
+
+$ ./timer ls -l -a
+total 28
+drwxr-x--- 2 m999999 mids  4096 Feb 24 17:08 .
+drwxr-x--- 5 m999999 mids  4096 Feb 24 17:03 ..
+-rw-r----- 1 m999999 mids    89 Feb 17 11:04 Makefile
+-rwxr-x--- 1 m999999 mids 10898 Feb 24 17:08 timer
+-rw-r----- 1 m999999 mids  1595 Feb 24 17:08 timer.c
+Run Time: 0.0002 (s)
+
+$ ./timer sleep
+sleep: missing operand
+Try 'sleep --help' for more information.
+Run Time: 0.0001 (s)
+
+$ ./timer sleep 1
+Run Time: 1.0000 (s)
+
+$ ./timer sleep 2
+Run Time: 2.0000 (s)
+
+$./timer BAD COMMAND
+BAD: No such file or directory
+Run Time: 0.0000 (s)
+
+Hint: You will need to construct an argv array for exec using the command line arguments to timer program. While this might seem challenging at first, consider that the difference between the two argv’s is just one index. For example, consider the argv for one of the runs the last run of timer above:
+
+             .-----.
+    argv ->  |  .--+--> "./timer"
+             |-----|
+             |  .--+--> "ls"
+             |-----|
+             |  .--+--> "-l"
+             |-----|
+             |  .--+--> NULL
+             '-----'
+
+Why not just set the argv to exec to start one index down using pointer arithmetic? Then you have exactly what you need.
+
+            .-----.
+             |  .--+--> "./timer"
+             |-----|
+  argv+1 ->  |  .--+--> "ls"
+             |-----|
+             |  .--+--> "-l"
+             |-----|
+             |  .--+--> NULL
+             '-----'
+
+

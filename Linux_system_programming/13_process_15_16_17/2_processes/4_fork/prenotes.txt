@@ -1,0 +1,2 @@
+The parent is notified via a signal, SIGCHLD, when the child process finishes but not vice versa.
+

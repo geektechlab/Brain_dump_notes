@@ -1,0 +1,3 @@
+What happens if we continously call printk?
+
+Then it will overwrite the content.

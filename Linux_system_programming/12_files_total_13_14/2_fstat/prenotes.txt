@@ -1,0 +1,3 @@
+The fstat function obtains information about the file that is already open on the descriptor fd
+
+

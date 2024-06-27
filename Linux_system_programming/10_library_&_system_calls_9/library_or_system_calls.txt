@@ -1,0 +1,16 @@
+Library functions vs. System Calls
+========================================
+
+Standard functions can be divided in two main categories :-
+	1. Library function calls.
+	2. System function calls.
+
+The functions which are a part of standard C library are known as Library functions.
+E.g. strcmp(), strlen()
+
+The functions which change the execution mode of the program from user mode to kernel mode are known as system calls
+E.g. socket(), open(), read() , write()
+
+A library function is linked to the user program and executes in user space but a system call is not linked to a user program and executes in kernel space.
+
+

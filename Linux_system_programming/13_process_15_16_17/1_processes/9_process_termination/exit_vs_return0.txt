@@ -1,0 +1,3 @@
+return will only terminate function
+
+exit will terminate process ( do strace in a program using exit. it internally calls _exit which exits all threads in process )
