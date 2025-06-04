@@ -1,0 +1,4 @@
+1694951340024	Delete resource '2_semihosting/1_uart_swv.launch'
+1694951518959	Delete resource '1_uart_swv/Debug/2_semihosting.elf'
+1694951536797	Rename resource '1_uart_swv'
+1694951550030	Rename resource '1_uart_swv1'
